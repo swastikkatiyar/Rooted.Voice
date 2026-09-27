@@ -1,0 +1,2 @@
+import {getAll,put} from './db.js';import {categories} from './categories.js';import {topics} from './topics.js';import {defaults} from './models.js';
+export async function seed(){const existing=await getAll('categories');if(!existing.length){for(const c of categories)await put('categories',c);for(const t of topics)await put('topics',t);await put('settings',{id:'app',...defaults,seeded:true})}else if(!(await getAll('settings')).length)await put('settings',{id:'app',...defaults,seeded:true})}

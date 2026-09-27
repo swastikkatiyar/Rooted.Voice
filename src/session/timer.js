@@ -1,0 +1,2 @@
+export function countdown(seconds,onTick,onDone){let remaining=seconds,active=true;onTick(remaining);const timer=setInterval(()=>{if(!active)return;remaining--;onTick(Math.max(0,remaining));if(remaining<=0){clearInterval(timer);onDone()}},1000);return()=>{active=false;clearInterval(timer)}}
+export const formatTime=s=>`${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;
