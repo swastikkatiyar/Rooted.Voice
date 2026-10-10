@@ -1,6 +1,6 @@
 # Rooted.Voice
 
-Rooted.Voice is a calm, local-first speaking practice ritual. Draw an unpracticed topic, prepare in silence, record your response, review it in three modes, and watch your practice grow into a Knowledge Garden.
+Rooted.Voice is a calm, local-first speaking practice ritual. Add your own topics, prepare in silence, record your response, review it, and watch practice grow into a 3D knowledge network.
 
 ## Run locally
 
@@ -11,7 +11,13 @@ python3 -m http.server 4173
 # open http://localhost:4173
 ```
 
-The app uses IndexedDB for metadata and seeds exactly 10 categories and 300 topics on first launch. Video binaries are saved through the browser's local storage APIs and are never uploaded.
+The app uses IndexedDB for metadata. Categories are available as empty shelves; topics and recordings are not preloaded. Add your own catalog in Settings. Video binaries are saved through the browser's local storage APIs and are never uploaded.
+
+If you previously launched an older build that seeded 300 demo topics, unused demo topics are removed on the next load when you have no recordings yet. Use **Clear all metadata** in Settings if you want a completely empty store.
+
+## Network
+
+The Knowledge Network is a 3D graph you can drag a full 360°, zoom with the scroll wheel, open in full screen, and click to play a recorded video. The total video count animates when the view appears. Category cards show practiced percent with sliding digits. Research and speaking sessions use a sliding countdown clock.
 
 ## Browser storage
 
@@ -22,10 +28,6 @@ The app uses IndexedDB for metadata and seeds exactly 10 categories and 300 topi
 ## Deploy to Vercel
 
 Import the repository into Vercel or run `vercel` from the repository root. No build command and no server functions are needed; `vercel.json` rewrites routes to the static entry point.
-
-## Design decisions
-
-The graph uses a deterministic lightweight force layout so it remains dependency-free and settles quickly for reduced-motion users. The graph is complemented by a searchable, keyboard-accessible hierarchy list. Multiple recordings for one topic are intentionally available from its Knowledge Garden detail panel, not from the exhausted draw screen. Clearing metadata leaves any real files in the chosen folder untouched.
 
 ## Scope
 

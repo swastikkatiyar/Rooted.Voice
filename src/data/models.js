@@ -3,7 +3,10 @@
 /** @typedef {{id:string,recordingId:string,timestampSeconds:number,text:string,createdAt:string}} TimestampedNote */
 /** @typedef {{id:string,topicId:string,text:string,createdAt:string,updatedAt:string,open:boolean}} TopicNote */
 export const defaults={theme:'system',defaultResearchSeconds:600,defaultSpeakingSeconds:180,storageMode:'opfs',hasRootDirectory:false};
+export const categoryColorTokens=['--accent-general','--accent-history','--accent-psychology','--accent-literature','--accent-technology','--accent-finance','--accent-entrepreneurship','--accent-science','--accent-philosophy','--accent-society'];
 const id=()=>crypto.randomUUID(); const now=()=>new Date().toISOString();
+export const createCategory=(x={})=>({id:id(),name:'',description:'',colorToken:'--accent',...x});
+export const createTopic=(x={})=>({id:id(),categoryId:'',title:'',prompt:'',used:false,firstUsedAt:null,recordingIds:[],...x});
 export const createRecordingMeta=(x={})=>({id:id(),topicId:'',createdAt:now(),researchTimeSeconds:600,speakingTimeSeconds:180,actualDurationSeconds:0,fileName:'',folderName:'',fileStatus:'pending',storageMode:'opfs',reviewed:false,lastReviewedMode:null,timestampedNoteIds:[],...x});
 export const createTimestampedNote=(x={})=>({id:id(),recordingId:'',timestampSeconds:0,text:'',createdAt:now(),...x});
 export const createTopicNote=(x={})=>({id:id(),topicId:'',text:'',createdAt:now(),updatedAt:now(),open:true,...x});

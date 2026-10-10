@@ -1,2 +1,21 @@
-import {getAll,put} from './db.js';import {categories} from './categories.js';import {topics} from './topics.js';import {defaults} from './models.js';
-export async function seed(){const existing=await getAll('categories');if(!existing.length){for(const c of categories)await put('categories',c);for(const t of topics)await put('topics',t);await put('settings',{id:'app',...defaults,seeded:true})}else if(!(await getAll('settings')).length)await put('settings',{id:'app',...defaults,seeded:true})}
+import {getAll, put, remove} from './db.js';
+import {categories} from './categories.js';
+import {defaults} from './models.js';
+
+const seedId = t => /^\w[\w-]*-\d{3}$/.test(t.id);
+
+export async function seed() {
+  const existingSettings = await getAll('settings');
+  if (!existingSettings.length) await put('settings', {id: 'app', ...defaults});
+
+  const existingCats = await getAll('categories');
+  if (!existingCats.length) {
+    for (const c of categories) await put('categories', c);
+  }
+
+  const [topics, recordings] = await Promise.all([getAll('topics'), getAll('recordings')]);
+  const unusedSeed = topics.filter(t => seedId(t) && !t.used && !(t.recordingIds || []).length);
+  if (unusedSeed.length && recordings.length === 0 && unusedSeed.length === topics.length) {
+    for (const t of unusedSeed) await remove('topics', t.id);
+  }
+}
